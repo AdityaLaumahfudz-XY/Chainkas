@@ -5,8 +5,8 @@ Chain-Kas adalah aplikasi manajemen keuangan kelas berbasis Web yang menggabungk
 Project ini dibuat untuk Lomba FESTIKA JATIM 2025
 
 Tim BLOKAS - SMAN 2 Kota Probolinggo
-1. Aditya Laumahfudz Isabel** (Developer)
-2. Muhammad Danish Pujotomo** (Analyst/Presenter)
+1. Aditya Laumahfudz Isabel
+2. Muhammad Danish Pujotomo
 
 ---
 Fitur Unggulan
