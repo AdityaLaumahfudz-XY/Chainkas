@@ -4,12 +4,12 @@ Chain-Kas adalah aplikasi manajemen keuangan kelas berbasis Web yang menggabungk
 
 Project ini dibuat untuk Lomba FESTIKA JATIM 2025
 
-👥 Tim BLOKAS - SMAN 2 Kota Probolinggo
+Tim BLOKAS - SMAN 2 Kota Probolinggo
 1. Aditya Laumahfudz Isabel** (Developer)
 2. Muhammad Danish Pujotomo** (Analyst/Presenter)
 
-
-#Fitur Unggulan
+---
+Fitur Unggulan
 
 1. Transparansi Real-time 
 Menggunakan Google Firebase, data yang diinput Bendahara akan muncul di layar Wali Kelas dan Siswa dalam hitungan milidetik tanpa perlu refresh halaman.
@@ -18,7 +18,7 @@ Menggunakan Google Firebase, data yang diinput Bendahara akan muncul di layar Wa
 Setiap transaksi dikunci dengan kode kriptografi (Hash) yang saling terhubung (Chaining).
 Rumus: `Hash = SHA(PrevHash + Nama + Nominal)`Ini menjamin urutan data tidak bisa diubah.
 
-3. Tamper-Evidence (Anti-Manipulasi) 🚨
+3. Tamper-Evidence (Anti-Manipulasi) 
 Fitur keamanan utama kami. Jika ada seseorang (hacker/admin nakal) yang mencoba mengubah nominal uang langsung dari Database (Backend), sistem akan otomatis mendeteksi ketidakcocokan Hash.
 Efek: Baris data akan berubah menjadi warna merah dan muncul peringatan "DATA PALSU!".
 
@@ -32,6 +32,3 @@ Logic: Vanilla JavaScript
 Database:Firebase Realtime Database (NoSQL)
 Architecture:Client-Side Rendering (Standalone)
 
-
-### 📜 Lisensi
-Project ini di bawah lisensi **MIT License**.
