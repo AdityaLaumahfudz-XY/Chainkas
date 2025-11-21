@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chain-Kas: Transparansi Kas Kelas</title>
+    <title>Chain-Kas: Transparansi Kas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body { background-color: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
         
-        /*tampilan login*/
+        /*  Layar login*/
         #hal-login {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -22,34 +22,40 @@
         }
         @keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /*tombol moto gawe ngintip password*/
+        /* mata*/
         .input-password-eye { border-right: none; }
         .input-group-text-eye { background-color: white; border-left: none; cursor: pointer; color: #6c757d; }
         .input-password-eye:focus + .input-group-text-eye { border-color: #86b7fe; border-left: none; }
         input[type="password"]::-ms-reveal, input[type="password"]::-ms-clear { display: none; }
         input[type="password"]::-webkit-password-reveal-button { display: none; }
 
-        /*dasbor utama*/
+        /*DASHBOARD*/
         .role-badge { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
         .hash-text { font-family: monospace; font-size: 0.75rem; background: #eee; padding: 2px 5px; border-radius: 4px; color: #555; display: block; width: fit-content; }
         #InputBendahara { display: none; border-left: 5px solid #0d6efd; }
         #InputWalas { display: none; border-left: 5px solid #dc3545; }
-        .pending-item { background: #fff3cd; border-left: 4px solid #ffc107; margin-bottom: 10px; padding: 10px; border-radius: 0 5px 5px 0; }
+        
+        /* Item pending*/
+        .pending-item { background: #e8f5e9; border-left: 4px solid #198754; margin-bottom: 10px; padding: 10px; border-radius: 0 5px 5px 0; } /* Hijau utk Pemasukan */
+        .pending-item-out { background: #f8d7da; border-left: 4px solid #dc3545; margin-bottom: 10px; padding: 10px; border-radius: 0 5px 5px 0; } /* Merah utk Pengeluaran */
+
         .bukti-foto { width: 100%; max-width: 80px; height: auto; border-radius: 5px; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
         .bukti-foto:hover { transform: scale(1.2); }
 
-        /*peringatan merah security*/
+        /*peringatan*/
         .row-palsu { background-color: #ffe6e6 !important; border-left: 5px solid red !important; animation: shake 0.5s; }
         .badge-palsu { background: red; color: white; font-weight: bold; padding: 5px 10px; border-radius: 5px; font-size: 0.8rem; display: inline-block; margin-bottom: 5px; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
         @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 50% { transform: translateX(5px); } 75% { transform: translateX(-5px); } 100% { transform: translateX(0); } }
 
-        /*status bayar wis lunas opo durung*/
+        /* Status Bayar */
         .status-box { display: inline-block; width: 25px; height: 25px; line-height: 25px; text-align: center; border-radius: 4px; font-size: 0.7em; font-weight: bold; margin-right: 2px; color: white; }
         .bg-not-paid { background-color: #e9ecef; color: #adb5bd; }
         .bg-paid { background-color: #198754; box-shadow: 0 0 5px #198754; }
 
-        /*biar notif sama modal gak ketutupan*/
         .toast-container { z-index: 10000; }
+        
+        /*TOTAL SALDO CARD*/
+        .saldo-card { background: linear-gradient(45deg, #11998e, #38ef7d); color: white; border: none; }
     </style>
 </head>
 <body>
@@ -59,10 +65,8 @@
         <div class="mb-3 text-primary"><i class="bi bi-safe2 display-1"></i></div>
         <h2 class="fw-bold mb-1">Chain-Kas</h2>
         <p class="text-muted small mb-4">Blockchain Class Ledger</p>
-        
         <div class="text-start">
             <div id="loginAlertPlaceholder"></div>
-
             <label class="form-label fw-bold small">Masuk Sebagai:</label>
             <select id="roleSelect" class="form-select mb-3" onchange="window.cekRoleLogin()">
                 <option value="" disabled selected>-- Pilih Peran --</option>
@@ -70,7 +74,6 @@
                 <option value="bendahara">📝 Bendahara</option>
                 <option value="walas">🛡️ Wali Kelas</option>
             </select>
-
             <div id="passwordField" style="display:none;">
                 <label class="form-label fw-bold small">Password:</label>
                 <div class="input-group mb-3">
@@ -80,17 +83,14 @@
                     </span>
                 </div>
             </div>
-            
             <button onclick="window.login()" class="btn btn-primary w-100 py-2 fw-bold shadow-sm">MASUK</button>
         </div>
-        <div class="mt-4 pt-3 border-top small text-muted">
-            Pass Bendahara: <b>123</b> | Walas: <b>guru</b>
-        </div>
+        <div class="mt-4 pt-3 border-top small text-muted">Pass Bendahara: <b>123</b> | Walas: <b>guru</b></div>
     </div>
 </div>
 
 <div id="mainApp" class="container py-4" style="display:none;">
-    <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
+    <div class="d-flex justify-content-between align-items-center mb-3 bg-white p-3 rounded shadow-sm">
         <div>
             <h4 class="fw-bold text-primary m-0"><i class="bi bi-wallet2"></i> Chain-Kas</h4>
             <small class="text-muted">Role: <span id="userRoleDisplay" class="badge bg-secondary role-badge">Guest</span> <span id="statusKoneksi" class="badge bg-secondary">Connecting...</span></small>
@@ -98,13 +98,23 @@
         <button onclick="window.logout()" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-right"></i> Keluar</button>
     </div>
 
+    <div class="card shadow-sm mb-4 saldo-card">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <small class="text-white-50">TOTAL SALDO KAS SAAT INI</small>
+                <h2 class="fw-bold m-0" id="displaySaldo">Rp 0</h2>
+            </div>
+            <div class="text-end">
+                <small class="d-block"><i class="bi bi-arrow-up-circle"></i> Masuk: <span id="displayMasuk">0</span></small>
+                <small class="d-block"><i class="bi bi-arrow-down-circle"></i> Keluar: <span id="displayKeluar">0</span></small>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-lg-5">
-            
             <div id="InputWalas" class="card shadow-sm mb-4">
-                <div class="card-header bg-danger text-white fw-bold d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-people-fill"></i> Manajemen Siswa</span>
-                </div>
+                <div class="card-header bg-danger text-white fw-bold"><span><i class="bi bi-people-fill"></i> Manajemen Siswa</span></div>
                 <div class="card-body">
                     <div id="walasAlertPlaceholder"></div>
                     <div class="input-group mb-3">
@@ -115,7 +125,7 @@
                         <small class="fw-bold text-muted">Cek Status Bulan:</small>
                         <select id="filterBulanWalas" class="form-select form-select-sm w-50" onchange="window.renderManajemenSiswa()"></select>
                     </div>
-                    <div class="border rounded bg-white" style="max-height: 300px; overflow-y: auto;">
+                    <div class="border rounded bg-white" style="max-height: 200px; overflow-y: auto;">
                         <ul id="listStatusSiswa" class="list-group list-group-flush small"></ul>
                     </div>
                     <div class="mt-2 text-center"><small class="text-muted fst-italic" style="font-size: 0.7em;"><span class="badge bg-success">M1</span> = Minggu 1 Lunas</small></div>
@@ -123,37 +133,57 @@
             </div>
 
             <div id="InputBendahara" class="card shadow-sm mb-4">
-                <div class="card-header bg-primary text-white fw-bold">
-                    <i class="bi bi-pencil-square"></i> Input Transaksi
-                </div>
+                <div class="card-header bg-primary text-white fw-bold"><i class="bi bi-pencil-square"></i> Input Transaksi</div>
                 <div class="card-body">
                     <div id="bendaharaAlertPlaceholder"></div>
-                    <div class="mb-2">
-                        <label class="small fw-bold">Nama Siswa:</label>
-                        <select id="inputNama" class="form-select"><option>Loading...</option></select>
+                    
+                    <div class="mb-3">
+                        <label class="small fw-bold">Kategori:</label>
+                        <div class="btn-group w-100" role="group">
+                            <input type="radio" class="btn-check" name="btnradio" id="modeMasuk" autocomplete="off" checked onclick="window.gantiModeInput('masuk')">
+                            <label class="btn btn-outline-success" for="modeMasuk"><i class="bi bi-arrow-up"></i> Pemasukan</label>
+                          
+                            <input type="radio" class="btn-check" name="btnradio" id="modeKeluar" autocomplete="off" onclick="window.gantiModeInput('keluar')">
+                            <label class="btn btn-outline-danger" for="modeKeluar"><i class="bi bi-arrow-down"></i> Pengeluaran</label>
+                        </div>
                     </div>
-                    <div class="mb-2">
-                        <label class="small fw-bold">Jenis Pembayaran:</label>
-                        <select id="tipeIuran" class="form-select" onchange="window.cekTipeIuran()">
-                            <option value="kas">📅 Kas Rutin Bulanan</option>
-                            <option value="custom">🎉 Acara / Lainnya</option>
-                        </select>
+
+                    <div id="panelPemasukan">
+                        <div class="mb-2">
+                            <label class="small fw-bold">Nama Siswa:</label>
+                            <select id="inputNama" class="form-select"><option>Loading...</option></select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="small fw-bold">Jenis Pembayaran:</label>
+                            <select id="tipeIuran" class="form-select" onchange="window.cekTipeIuran()">
+                                <option value="kas">📅 Kas Rutin Bulanan</option>
+                                <option value="custom">🎉 Lainnya</option>
+                            </select>
+                        </div>
+                        <div id="formKasRutin" class="row g-2 mb-2">
+                            <div class="col-6"><select id="inputBulan" class="form-select form-select-sm"></select></div>
+                            <div class="col-6"><select id="inputMinggu" class="form-select form-select-sm">
+                                <option value="Minggu 1">Minggu 1</option><option value="Minggu 2">Minggu 2</option>
+                                <option value="Minggu 3">Minggu 3</option><option value="Minggu 4">Minggu 4</option>
+                            </select></div>
+                        </div>
+                        <div id="formCustom" class="mb-2" style="display:none;">
+                            <input type="text" id="inputKetCustom" class="form-control" placeholder="Keterangan...">
+                        </div>
                     </div>
-                    <div id="formKasRutin" class="row g-2 mb-2">
-                        <div class="col-6"><select id="inputBulan" class="form-select form-select-sm"></select></div>
-                        <div class="col-6"><select id="inputMinggu" class="form-select form-select-sm">
-                            <option value="Minggu 1">Minggu 1</option><option value="Minggu 2">Minggu 2</option>
-                            <option value="Minggu 3">Minggu 3</option><option value="Minggu 4">Minggu 4</option>
-                        </select></div>
+
+                    <div id="panelPengeluaran" style="display: none;">
+                        <div class="mb-2">
+                            <label class="small fw-bold">Keperluan Pengeluaran:</label>
+                            <textarea id="ketPengeluaran" class="form-control" rows="2" placeholder="Contoh: Beli Spidol, Fotocopy..."></textarea>
+                        </div>
                     </div>
-                    <div id="formCustom" class="mb-2" style="display:none;">
-                        <input type="text" id="inputKetCustom" class="form-control" placeholder="Keterangan...">
-                    </div>
+
                     <div class="row g-2 mb-2">
-                        <div class="col-6"><input type="number" id="inputJumlah" class="form-control" placeholder="Rp 5000"></div>
+                        <div class="col-6"><input type="number" id="inputJumlah" class="form-control" placeholder="Rp Nominal"></div>
                         <div class="col-6"><input type="file" id="inputFoto" class="form-control form-control-sm" accept="image/*"></div>
                     </div>
-                    <button onclick="window.tambahData()" class="btn btn-primary w-100">Kirim ke Pending</button>
+                    <button onclick="window.prosesInput()" class="btn btn-primary w-100">Kirim Pengajuan</button>
                 </div>
             </div>
 
@@ -167,30 +197,44 @@
         </div>
 
         <div class="col-lg-7">
-            <div class="card shadow-sm border-0">
+            
+            <div class="card shadow-sm border-0 mb-4">
                 <div class="card-header bg-success text-white fw-bold">
-                    <i class="bi bi-link-45deg"></i> Blockchain Ledger
+                    <i class="bi bi-link-45deg"></i> Blockchain Ledger (Pemasukan)
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
                         <table class="table table-hover mb-0 align-middle" style="font-size: 0.9rem;">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Waktu</th>
-                                    <th>Transaksi</th>
-                                    <th class="text-center">Bukti</th>
-                                    <th class="text-end">Jumlah</th>
-                                    <th>Status Hash</th>
+                                    <th>Waktu</th><th>Transaksi</th><th class="text-center">Bukti</th><th class="text-end">Jumlah</th><th>Hash</th>
                                 </tr>
                             </thead>
                             <tbody id="listChain"></tbody>
                         </table>
                     </div>
                 </div>
-                <div class="card-footer text-center text-muted small">
-                    <i class="bi bi-shield-check"></i> Data yang <b>MERAH</b> berarti telah dimanipulasi.
+                <div class="card-footer text-center text-muted small"><i class="bi bi-shield-check"></i> Data MERAH = Dimanipulasi.</div>
+            </div>
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white fw-bold">
+                    <i class="bi bi-cart-dash"></i> Riwayat Pengeluaran
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0 align-middle" style="font-size: 0.9rem;">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Waktu</th><th>Keperluan</th><th class="text-center">Bukti</th><th class="text-end">Jumlah</th><th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listPengeluaran"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
@@ -204,17 +248,14 @@
     </div>
 </div>
 
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+<div class="modal fade" id="confirmModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header bg-warning text-dark border-0">
-        <h5 class="modal-title fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Konfirmasi</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="confirmModalBody">Apakah Anda yakin?</div>
+      <div class="modal-header bg-warning text-dark border-0"><h5 class="modal-title fw-bold">Konfirmasi</h5></div>
+      <div class="modal-body" id="confirmModalBody">Yakin?</div>
       <div class="modal-footer border-0">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-danger" id="btnConfirmYes">Ya, Lanjutkan</button>
+        <button type="button" class="btn btn-danger" id="btnConfirmYes">Ya</button>
       </div>
     </div>
   </div>
@@ -226,7 +267,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getDatabase, ref, push, set, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-    //konfig database, ojo dicolong key ne
     const firebaseConfig = {
         apiKey: "AIzaSyDCLhG1R8ss3xyu5wHEwMlhwP5P-JGD2qk",
         authDomain: "chain-kas.firebaseapp.com",
@@ -242,57 +282,45 @@
     const db = getDatabase(app);
 
     let currentRole = "";
-    let localData = { pending: {}, chain: {}, students: {} };
+    let localData = { pending: {}, chain: {}, students: {}, pending_out: {}, expenses: {} };
     const daftarBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    let inputMode = 'masuk'; // 'masuk' atau 'keluar'
 
-    //fungsi bantu2 biar ga ribet
+    //pembantu
     let confirmCallback = null;
-    function askConfirm(message, callback) {
-        document.getElementById('confirmModalBody').innerText = message;
-        confirmCallback = callback;
-        const myModal = new bootstrap.Modal(document.getElementById('confirmModal'));
-        myModal.show();
+    function askConfirm(msg, cb) {
+        document.getElementById('confirmModalBody').innerText = msg; confirmCallback = cb;
+        new bootstrap.Modal(document.getElementById('confirmModal')).show();
     }
-    document.getElementById('btnConfirmYes').addEventListener('click', function() {
-        if (confirmCallback) confirmCallback();
-        const modalEl = document.getElementById('confirmModal');
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        modal.hide();
-    });
-
-    function showToast(message, type = 'success') {
-        const toastEl = document.getElementById('liveToast');
-        document.getElementById('toastMessage').innerText = message;
-        toastEl.className = `toast align-items-center text-white bg-${type} border-0`;
-        const toast = new bootstrap.Toast(toastEl);
-        toast.show();
+    document.getElementById('btnConfirmYes').addEventListener('click', () => { if(confirmCallback) confirmCallback(); });
+    function showToast(msg, type='success') {
+        const el = document.getElementById('liveToast');
+        document.getElementById('toastMessage').innerText = msg;
+        el.className = `toast align-items-center text-white bg-${type} border-0`;
+        new bootstrap.Toast(el).show();
     }
-    function showInlineAlert(id, msg, type = 'danger') {
-        document.getElementById(id).innerHTML = `<div class="alert alert-${type} alert-dismissible fade show py-2 small shadow-sm" role="alert"><i class="bi bi-exclamation-circle-fill me-2"></i> ${msg}<button type="button" class="btn-close py-2" data-bs-dismiss="alert"></button></div>`;
-    }
+    function showInlineAlert(id, msg) { document.getElementById(id).innerHTML = `<div class="alert alert-danger py-2 small">${msg}</div>`; }
     function clearInlineAlert(id) { document.getElementById(id).innerHTML = ""; }
 
-    //siapin dropdown wulan
-    const bulanSkrg = new Date().getMonth();
+    // SETUP
     const renderBulanOptions = (id) => {
-        const sel = document.getElementById(id);
-        sel.innerHTML = "";
-        daftarBulan.forEach((b, i) => {
-            let selected = (i === bulanSkrg) ? "selected" : "";
-            sel.innerHTML += `<option value="${b}" ${selected}>${b}</option>`;
-        });
+        const sel = document.getElementById(id); sel.innerHTML = "";
+        daftarBulan.forEach((b, i) => { sel.innerHTML += `<option value="${b}" ${i === new Date().getMonth() ? "selected" : ""}>${b}</option>`; });
     };
-    renderBulanOptions('inputBulan');
-    renderBulanOptions('filterBulanWalas');
+    renderBulanOptions('inputBulan'); renderBulanOptions('filterBulanWalas');
 
-    //nguping lek onok update data teko firebase
+    //pembaca database
     onValue(ref(db), (snapshot) => {
         const val = snapshot.val() || {};
         document.getElementById("statusKoneksi").innerText = "Online";
         document.getElementById("statusKoneksi").className = "badge bg-success";
+        
         localData.pending = val.pending || {};
         localData.chain = val.chain || {};
         localData.students = val.students || {};
+        localData.pending_out = val.pending_out || {};
+        localData.expenses = val.expenses || {};
+
         if (!val.chain) buatGenesis();
         renderUI(); renderManajemenSiswa();
     });
@@ -300,74 +328,197 @@
     function buatGenesis() {
         update(ref(db), { "chain/0": { index: 0, waktu: "INIT", nama: "SYSTEM", ket: "Genesis", jumlah: 0, foto: "", prevHash: "0", hash: "0x00000000" } });
     }
-
     function simpleHash(str) {
         let h = 0; for(let i=0; i<str.length; i++) h = Math.imul(31,h) + str.charCodeAt(i)|0;
         return "0x" + Math.abs(h).toString(16).padStart(8, '0');
     }
 
-    //tampilno kabeh neng layar
+    //render ui
     function renderUI() {
-        const lstP = document.getElementById('listPending');
-        const pKeys = Object.keys(localData.pending);
-        document.getElementById('countPending').innerText = pKeys.length;
-        lstP.innerHTML = pKeys.length===0?"<small class='text-muted'>Kosong</small>":"";
+        // 1. HITUNG TOTAL SALDO
+        let totalMasuk = 0;
+        Object.values(localData.chain).forEach(b => totalMasuk += (b.index===0 ? 0 : parseInt(b.jumlah)));
+        let totalKeluar = 0;
+        Object.values(localData.expenses).forEach(e => totalKeluar += parseInt(e.jumlah));
+        
+        document.getElementById('displaySaldo').innerText = `Rp ${totalMasuk - totalKeluar}`;
+        document.getElementById('displayMasuk').innerText = `Rp ${totalMasuk}`;
+        document.getElementById('displayKeluar').innerText = `Rp ${totalKeluar}`;
 
-        pKeys.forEach(k => {
+        //PENDING LIST (Gabungan Masuk & Keluar)
+        const lstP = document.getElementById('listPending');
+        lstP.innerHTML = "";
+        let pendingCount = 0;
+
+        //Pending Masuk
+        Object.keys(localData.pending).forEach(k => {
+            pendingCount++;
             const i = localData.pending[k];
             let img = i.foto ? `<img src="${i.foto}" class="bukti-foto" onclick="window.open('${i.foto}')">` : "";
-            let btn = currentRole==='walas' ? `
-                <div class="mt-2">
-                    <button onclick="window.validasiWalas('${k}')" class="btn btn-sm btn-success me-1">ACC</button>
-                    <button onclick="window.tolak('${k}')" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
-                </div>` : "";
-            lstP.innerHTML += `<div class="pending-item shadow-sm"><div class="d-flex justify-content-between"><div><strong>${i.nama}</strong><br><small>${i.ket}</small></div><strong class="text-primary">Rp${i.jumlah}</strong></div>${img}${btn}</div>`;
+            let btn = currentRole==='walas' ? `<div class="mt-2"><button onclick="window.validasiWalas('${k}')" class="btn btn-sm btn-success me-1">ACC</button><button onclick="window.tolak('${k}', 'masuk')" class="btn btn-sm btn-outline-danger">Tolak</button></div>` : "";
+            lstP.innerHTML += `<div class="pending-item shadow-sm"><div class="d-flex justify-content-between"><div><span class="badge bg-success mb-1">PEMASUKAN</span><br><strong>${i.nama}</strong><br><small>${i.ket}</small></div><strong class="text-success">+Rp${i.jumlah}</strong></div>${img}${btn}</div>`;
         });
 
+        // Pending Keluar
+        Object.keys(localData.pending_out).forEach(k => {
+            pendingCount++;
+            const i = localData.pending_out[k];
+            let img = i.foto ? `<img src="${i.foto}" class="bukti-foto" onclick="window.open('${i.foto}')">` : "";
+            let btn = currentRole==='walas' ? `<div class="mt-2"><button onclick="window.validasiPengeluaran('${k}')" class="btn btn-sm btn-success me-1">ACC</button><button onclick="window.tolak('${k}', 'keluar')" class="btn btn-sm btn-outline-danger">Tolak</button></div>` : "";
+            lstP.innerHTML += `<div class="pending-item-out shadow-sm"><div class="d-flex justify-content-between"><div><span class="badge bg-danger mb-1">PENGAJUAN KELUAR</span><br><strong>${i.ket}</strong></div><strong class="text-danger">-Rp${i.jumlah}</strong></div>${img}${btn}</div>`;
+        });
+        
+        if(pendingCount===0) lstP.innerHTML = "<small class='text-muted'>Tidak ada antrian.</small>";
+        document.getElementById('countPending').innerText = pendingCount;
+
+        //BLOCKCHAIN TABLE (Pemasukan)
         const lstC = document.getElementById('listChain');
         lstC.innerHTML = "";
-        const cArr = Object.values(localData.chain);
-        
-        [...cArr].reverse().forEach(b => {
+        [...Object.values(localData.chain)].reverse().forEach(b => {
             let img = b.foto ? `<img src="${b.foto}" style="width:30px; height:30px; object-fit:cover; border-radius:4px; cursor:pointer;" onclick="window.open('${b.foto}')">` : "-";
-            const hashHitung = simpleHash(b.prevHash + b.nama + b.jumlah);
-            let isValid = (b.hash === hashHitung) || (b.index === 0);
-            
-            let trClass = isValid ? "" : "row-palsu";
-            let badgeAlert = isValid ? "" : '<br><div class="badge-palsu">⚠️ DATA PALSU!</div>';
-            let hashDisplay = isValid ? `<span class="hash-text text-primary">🔒 ${b.hash.substring(0,10)}...</span>` : `<span class="hash-text text-danger fw-bold text-decoration-line-through">${b.hash.substring(0,10)}...</span><br><span class="hash-text text-success">✅ Seharusnya: ${hashHitung.substring(0,10)}...</span>`;
-            let btnDel = (currentRole==='walas' && b.index!==0) ? `<button onclick="window.hapusBlock(${b.index})" class="btn btn-link text-danger p-0 ms-2" title="Hapus"><i class="bi bi-trash"></i></button>` : "";
+            let valid = (b.hash === simpleHash(b.prevHash+b.nama+b.jumlah)) || b.index===0;
+            let cls = valid ? "" : "row-palsu";
+            let badge = valid ? "" : '<br><span class="badge bg-danger">MANIPULASI</span>';
+            let del = (currentRole==='walas'&&b.index!==0)? `<button onclick="window.hapusBlock(${b.index})" class="btn btn-link text-danger p-0 ms-2"><i class="bi bi-trash"></i></button>`:"";
+            lstC.innerHTML += `<tr class="${cls}"><td><small>${b.waktu.split(',')[0]}</small>${badge}</td><td><strong>${b.nama}</strong><br><small class="text-muted">${b.ket}</small></td><td class="text-center">${img}</td><td class="text-end text-success fw-bold">+Rp${b.jumlah}${del}</td><td><span class="hash-text text-primary">🔒 ${b.hash.substring(0,8)}...</span></td></tr>`;
+        });
 
-            lstC.innerHTML += `<tr class="${trClass}"><td><small>${b.waktu.split(',')[0]}</small>${badgeAlert}</td><td><strong>${b.nama}</strong><br><small class="text-muted">${b.ket}</small></td><td class="text-center">${img}</td><td class="text-end">Rp${b.jumlah}${btnDel}</td><td><span class="hash-text text-muted">🔗 Prev: ${b.prevHash.substring(0,8)}...</span>${hashDisplay}</td></tr>`;
+        //EXPENSE TABLE (Pengeluaran)
+        const lstE = document.getElementById('listPengeluaran');
+        lstE.innerHTML = "";
+        const expensesArr = Object.keys(localData.expenses).map(k => ({...localData.expenses[k], key: k}));
+        
+        if(expensesArr.length === 0) lstE.innerHTML = "<tr><td colspan='5' class='text-center text-muted'>Belum ada pengeluaran.</td></tr>";
+
+        [...expensesArr].reverse().forEach(e => {
+            let img = e.foto ? `<img src="${e.foto}" style="width:30px; height:30px; object-fit:cover; border-radius:4px; cursor:pointer;" onclick="window.open('${e.foto}')">` : "-";
+            let btnDel = currentRole==='walas' ? `<button onclick="window.hapusPengeluaran('${e.key}')" class="btn btn-sm btn-link text-danger"><i class="bi bi-trash"></i></button>` : "";
+            lstE.innerHTML += `<tr><td><small>${e.waktu.split(',')[0]}</small></td><td>${e.ket}</td><td class="text-center">${img}</td><td class="text-end text-danger fw-bold">-Rp${e.jumlah}</td><td>${btnDel}</td></tr>`;
         });
     }
 
-    //otak program e
-    window.tambahSiswa = function() {
-        clearInlineAlert('walasAlertPlaceholder');
-        const nama = document.getElementById('namaSiswaBaru').value.trim();
-        if(!nama) return showInlineAlert('walasAlertPlaceholder', "Nama kosong!");
-        if(Object.values(localData.students).some(n => n.toLowerCase()===nama.toLowerCase())) return showInlineAlert('walasAlertPlaceholder', "Nama sudah ada!", 'warning');
-        push(ref(db, 'students'), nama);
-        document.getElementById('namaSiswaBaru').value = "";
-        showToast("Siswa ditambahkan.");
+    //INPUT LOGIka
+    window.gantiModeInput = (mode) => {
+        inputMode = mode;
+        if(mode === 'masuk') {
+            document.getElementById('panelPemasukan').style.display = 'block';
+            document.getElementById('panelPengeluaran').style.display = 'none';
+        } else {
+            document.getElementById('panelPemasukan').style.display = 'none';
+            document.getElementById('panelPengeluaran').style.display = 'block';
+        }
     }
-    window.hapusSiswa = function(key) { askConfirm("Hapus siswa ini?", () => { remove(ref(db, 'students/'+key)); showToast("Siswa dihapus."); }); }
 
+    window.prosesInput = function() {
+        clearInlineAlert('bendaharaAlertPlaceholder');
+        const jml = document.getElementById('inputJumlah').value;
+        if(!jml) return showInlineAlert('bendaharaAlertPlaceholder', "Nominal harus diisi!");
+
+        let data = { jumlah: parseInt(jml), waktu: new Date().toLocaleString() };
+        let targetNode = "";
+
+        if(inputMode === 'masuk') {
+            const nama = document.getElementById('inputNama').value;
+            if(!nama) return showInlineAlert('bendaharaAlertPlaceholder', "Pilih siswa!");
+            let ket = document.getElementById('tipeIuran').value === 'kas' ? `Kas ${document.getElementById('inputBulan').value} (${document.getElementById('inputMinggu').value})` : document.getElementById('inputKetCustom').value;
+            if(!ket) return showInlineAlert('bendaharaAlertPlaceholder', "Keterangan kosong!");
+            
+            data.nama = nama;
+            data.ket = ket;
+            targetNode = 'pending';
+        } else {
+            const ketOut = document.getElementById('ketPengeluaran').value;
+            if(!ketOut) return showInlineAlert('bendaharaAlertPlaceholder', "Keperluan pengeluaran harus diisi!");
+            data.ket = ketOut;
+            targetNode = 'pending_out';
+        }
+
+        const send = (foto) => {
+            data.foto = foto;
+            push(ref(db, targetNode), data);
+            showToast("Berhasil diajukan!");
+            // Reset
+            document.getElementById('inputJumlah').value = "";
+            document.getElementById('inputFoto').value = "";
+            document.getElementById('ketPengeluaran').value = "";
+        };
+
+        const f = document.getElementById('inputFoto').files[0];
+        if(f) { const r = new FileReader(); r.onload = e => send(e.target.result); r.readAsDataURL(f); }
+        else { send(""); }
+    }
+
+    //VALIDASI
+    window.validasiWalas = function(key) { // Validasi Pemasukan (Blockchain)
+        const item = localData.pending[key];
+        if(!item) return;
+        const arr = localData.chain ? Object.values(localData.chain) : [];
+        arr.sort((a, b) => a.index - b.index);
+        if(arr.length===0) {buatGenesis(); return showToast("Sync DB...", "warning");}
+        const last = arr[arr.length-1];
+        const newIndex = last.index + 1;
+
+        const newBlock = {
+            index: newIndex, waktu: new Date().toLocaleString(), nama: item.nama, ket: item.ket, jumlah: item.jumlah, foto: item.foto||"",
+            prevHash: last.hash, hash: simpleHash(last.hash + item.nama + item.jumlah)
+        };
+        set(ref(db, 'chain/'+newIndex), newBlock).then(()=> { remove(ref(db, 'pending/'+key)); showToast("Pemasukan Sah!"); });
+    }
+
+    window.validasiPengeluaran = function(key) { // Validasi Pengeluaran (Ledger Biasa)
+        const item = localData.pending_out[key];
+        if(!item) return;
+        push(ref(db, 'expenses'), item).then(() => {
+            remove(ref(db, 'pending_out/'+key));
+            showToast("Pengeluaran Disetujui.");
+        });
+    }
+
+    window.tolak = function(key, type) {
+        askConfirm("Tolak pengajuan ini?", () => {
+            const node = type === 'masuk' ? 'pending' : 'pending_out';
+            remove(ref(db, `${node}/${key}`));
+            showToast("Ditolak.");
+        });
+    }
+
+    window.hapusBlock = function(idx) {
+        askConfirm("AWAS: Hapus data valid akan merusak Hash!", () => {
+            const k = Object.keys(localData.chain).find(key => localData.chain[key].index == idx);
+            if(k) remove(ref(db, 'chain/'+k));
+        });
+    }
+
+    window.hapusPengeluaran = function(key) {
+        askConfirm("Hapus data pengeluaran ini?", () => {
+            remove(ref(db, 'expenses/'+key));
+        });
+    }
+
+    //tambahan
+    window.tambahSiswa = function() {
+        const n = document.getElementById('namaSiswaBaru').value.trim();
+        if(!n) return;
+        if(Object.values(localData.students).some(s=>s.toLowerCase()===n.toLowerCase())) return alert("Ada!");
+        push(ref(db, 'students'), n);
+        document.getElementById('namaSiswaBaru').value = "";
+    }
+    window.hapusSiswa = function(k) { askConfirm("Hapus siswa?", () => remove(ref(db, 'students/'+k))); }
+    
     window.renderManajemenSiswa = function() {
-        const select = document.getElementById('inputNama');
-        const listStatus = document.getElementById('listStatusSiswa');
-        const bulanDipilih = document.getElementById('filterBulanWalas').value;
-        const siswaArray = Object.keys(localData.students).map(k => ({ key: k, nama: localData.students[k] }));
-        siswaArray.sort((a,b) => a.nama.localeCompare(b.nama));
-        let options = '<option value="">-- Pilih Siswa --</option>';
-        siswaArray.forEach(s => { options += `<option value="${s.nama}">${s.nama}</option>`; });
-        select.innerHTML = options;
-        listStatus.innerHTML = siswaArray.length===0 ? "<li class='list-group-item'>Belum ada siswa.</li>" : "";
-        siswaArray.forEach(s => {
-            const cek = (m) => Object.values(localData.chain).find(b => b.nama === s.nama && b.ket.includes(`Kas ${bulanDipilih}`) && b.ket.includes(m));
+        const sel = document.getElementById('inputNama');
+        const lst = document.getElementById('listStatusSiswa');
+        const bln = document.getElementById('filterBulanWalas').value;
+        const arr = Object.keys(localData.students).map(k=>({k, n:localData.students[k]})).sort((a,b)=>a.n.localeCompare(b.n));
+        
+        sel.innerHTML = '<option value="">-- Pilih --</option>';
+        arr.forEach(s => sel.innerHTML += `<option value="${s.n}">${s.n}</option>`);
+        
+        lst.innerHTML = arr.length===0 ? "<li class='list-group-item'>Kosong</li>" : "";
+        arr.forEach(s => {
+            const cek = (m) => Object.values(localData.chain).find(b => b.nama === s.n && b.ket.includes(`Kas ${bln}`) && b.ket.includes(m));
             const st = (m) => cek(m) ? "bg-paid" : "bg-not-paid";
-            listStatus.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center"><div><div class="fw-bold">${s.nama}</div><div class="d-flex mt-1"><span class="status-box ${st('Minggu 1')}">M1</span><span class="status-box ${st('Minggu 2')}">M2</span><span class="status-box ${st('Minggu 3')}">M3</span><span class="status-box ${st('Minggu 4')}">M4</span></div></div><button onclick="window.hapusSiswa('${s.key}')" class="btn btn-sm btn-link text-danger"><i class="bi bi-trash"></i></button></li>`;
+            lst.innerHTML += `<li class="list-group-item d-flex justify-content-between align-items-center"><div><div class="fw-bold">${s.n}</div><div class="d-flex mt-1"><span class="status-box ${st('Minggu 1')}">M1</span><span class="status-box ${st('Minggu 2')}">M2</span><span class="status-box ${st('Minggu 3')}">M3</span><span class="status-box ${st('Minggu 4')}">M4</span></div></div><button onclick="window.hapusSiswa('${s.k}')" class="btn btn-sm text-danger"><i class="bi bi-trash"></i></button></li>`;
         });
     }
 
@@ -377,83 +528,17 @@
         document.getElementById('formCustom').style.display = t==='custom'?'block':'none';
     }
 
-    window.tambahData = function() {
-        clearInlineAlert('bendaharaAlertPlaceholder');
-        const nama = document.getElementById('inputNama').value;
-        if(!nama) return showInlineAlert('bendaharaAlertPlaceholder', "Pilih siswa!");
-        let ket = document.getElementById('tipeIuran').value === 'kas' ? `Kas ${document.getElementById('inputBulan').value} (${document.getElementById('inputMinggu').value})` : document.getElementById('inputKetCustom').value;
-        if(!ket) return showInlineAlert('bendaharaAlertPlaceholder', "Isi keterangan!");
-        const jml = document.getElementById('inputJumlah').value;
-        if(!jml) return showInlineAlert('bendaharaAlertPlaceholder', "Isi nominal!");
-
-        const send = (foto) => {
-            push(ref(db, 'pending'), { nama: nama, ket: ket, jumlah: parseInt(jml), foto: foto, waktu: new Date().toLocaleString() });
-            showToast("Terkirim ke Pending!");
-            document.getElementById('inputJumlah').value = "";
-            document.getElementById('inputFoto').value = "";
-        };
-        const f = document.getElementById('inputFoto').files[0];
-        if(f) { const r = new FileReader(); r.onload = e => send(e.target.result); r.readAsDataURL(f); } 
-        else { send(""); }
-    }
-
-    //definisi blok
-    window.validasiWalas = function(key) {
-        const item = localData.pending[key];
-        if(!item) return;
-        
-        //ambil data chain trus diurutne sek ben index e rapi
-        let arr = localData.chain ? Object.values(localData.chain) : [];
-        arr.sort((a, b) => a.index - b.index);
-
-        if(arr.length===0) {buatGenesis(); return showToast("Sync DB... Coba lagi", "warning");}
-        
-        //ambil blok terakhir yg beneran terakhir
-        const last = arr[arr.length-1];
-        
-        //Index baru iku index terakhir + 1, dudu jumlah data (length)
-        //Dadi masio onok sing dihapus, index tetep lanjut terus gak bakal nabrak
-        const newIndex = last.index + 1;
-
-        const newBlock = {
-            index: newIndex, 
-            waktu: new Date().toLocaleString(), 
-            nama: item.nama, 
-            ket: item.ket, 
-            jumlah: item.jumlah, 
-            foto: item.foto||"",
-            prevHash: last.hash, 
-            hash: simpleHash(last.hash + item.nama + item.jumlah)
-        };
-        
-        //simpen nggo index sing anyar
-        set(ref(db, 'chain/'+newIndex), newBlock).then(()=> { 
-            remove(ref(db, 'pending/'+key)); 
-            showToast("Validasi Sukses!"); 
-        });
-    }
-
-    window.tolak = function(k) { askConfirm("Hapus pending ini?", () => { remove(ref(db, 'pending/'+k)); showToast("Ditolak."); }); }
-    window.hapusBlock = function(idx) {
-        askConfirm("AWAS: Data tidak bisa dikembalikan lagi! Lanjut?", () => {
-            const k = Object.keys(localData.chain).find(key => localData.chain[key].index == idx);
-            if(k) { remove(ref(db, 'chain/'+k)); showToast("Block dihapus.", "warning"); }
-        });
-    }
-    //urusan login
+    // AUTH
     window.cekRoleLogin = function() {
         const r = document.getElementById('roleSelect').value;
         document.getElementById('passwordField').style.display = (r==='siswa'||r==='')?'none':'block';
         clearInlineAlert('loginAlertPlaceholder');
-        const passInput = document.getElementById('passInput');
-        const iconEye = document.getElementById('iconEye');
-        passInput.value = ""; passInput.type = "password";
-        if(iconEye) { iconEye.className = "bi bi-eye"; iconEye.classList.remove('bi-eye-slash'); }
+        document.getElementById('passInput').value = "";
     }
     window.togglePassword = function() {
         const p = document.getElementById('passInput'); const i = document.getElementById('iconEye');
-        if (p.type === 'password') { p.type = 'text'; i.classList.replace('bi-eye','bi-eye-slash'); } 
-        else { p.type = 'password'; i.classList.replace('bi-eye-slash','bi-eye'); }
+        if(p.type==='password'){p.type='text';i.classList.replace('bi-eye','bi-eye-slash');}
+        else{p.type='password';i.classList.replace('bi-eye-slash','bi-eye');}
     }
     window.login = function() {
         clearInlineAlert('loginAlertPlaceholder');
@@ -469,11 +554,10 @@
             document.getElementById('InputWalas').style.display = (r==='walas')?'block':'none';
             document.getElementById('InputBendahara').style.display = (r==='bendahara')?'block':'none';
             renderUI(); renderManajemenSiswa();
-            showToast(`Selamat Datang ${r.toUpperCase()}`);
+            showToast(`Halo ${r.toUpperCase()}`);
         } else { showInlineAlert('loginAlertPlaceholder', "Password salah!"); }
     }
     window.logout = function() { location.reload(); }
-
 </script>
 </body>
 </html>
