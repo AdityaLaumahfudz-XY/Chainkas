@@ -27,8 +27,12 @@ Bendahara wajib mengunggah foto fisik uang saat input data. Foto dikonversi menj
 
 ---
 Teknologi yang Digunakan
+
 -Frontend: HTML5, CSS3, Bootstrap 5.3
+
 -Logic: Vanilla JavaScript
+
 -Database:Firebase Realtime Database (NoSQL)
+
 -Architecture:Client-Side Rendering (Standalone)
 
